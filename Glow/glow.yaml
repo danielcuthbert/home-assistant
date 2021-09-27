@@ -1,0 +1,81 @@
+# Non-smart meter pulse measurement tool
+esphome:
+  name: home-assistant-glow
+  platform: ESP8266
+  board: huzzah
+
+# Enable logging
+logger:
+
+# Enable Home Assistant API
+api:
+
+ota:
+  password: "i like beans"
+
+#I've found ESPHome works better with a static IP 
+wifi:
+  manual_ip:
+    static_ip: 192.168.0.0
+    gateway: 192.168.0.1
+    subnet: 255.255.255.0
+  ssid: "add yours here"
+  password: "i still like beans"
+
+
+captive_portal:
+
+output:
+
+  - platform: gpio
+    pin: GPIO14
+    id: output_red
+  - platform: gpio
+    pin: GPIO12
+    id: output_green
+
+light:
+  - platform: binary
+    internal: true
+    id: led_red
+    name: Red
+    output: output_red
+
+# We can use the blue LED to tell us if there are wifi issues
+status_led:
+  pin:
+    number: GPIO13
+
+
+# The sensor measures the pulse coming from the meter and reports back on both 
+# current usage and overall usage
+# The pulse rate has been set to 1000 Imp/kWh (basically it flashes 1000 times
+# for each kWh of electricty which passes through)
+# we then take that value and do the following (60 / imp value) * 1000)
+sensor:
+  - platform: pulse_meter
+    name: Current energy used by the house
+    unit_of_measurement: 'W'
+    state_class: measurement
+    device_class: power
+    icon: mdi:flash-circle
+    accuracy_decimals: 0
+    pin: GPIO4
+    on_value:
+      then:
+        - light.turn_on:
+            id: led_red
+        - delay: 0.5s
+        - light.turn_off:
+            id: led_red
+    filters:
+      - lambda: return x * ((60.0 / 1000) * 1000.0);
+    total:
+      name: 'Total energy used by the house'
+      unit_of_measurement: 'kWh'
+      icon: mdi:circle-slice-3
+      state_class: total_increasing
+      device_class: energy
+      accuracy_decimals: 3
+      filters:
+        - lambda: return x * (1.0 / 1000);

@@ -1,0 +1,37 @@
+# A pollution sensor based upon the amazing 
+# https://www.ikea.com/gb/en/p/vindriktning-air-quality-sensor-80515910/
+
+esphome:
+  name: vindrikting-kitchen
+  platform: ESP8266
+  board: d1_mini
+
+# Enable logging
+logger:
+
+# Enable Home Assistant API
+api:
+
+ota:
+  password: "i like beans"
+
+#I've found ESPHome works better with a static IP 
+wifi:
+  manual_ip:
+    static_ip: 192.168.0.0
+    gateway: 192.168.0.1
+    subnet: 255.255.255.0
+  ssid: "add yours here"
+  password: "i still like beans"
+
+
+captive_portal:
+
+uart:
+  rx_pin: D2
+  baud_rate: 9600
+
+sensor:
+  - platform: pm1006
+    pm_2_5:
+      name: "IKEA Vindriktning PM2.5 sensor in Kitchen"

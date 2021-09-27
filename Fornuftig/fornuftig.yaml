@@ -1,0 +1,150 @@
+esphome:
+  name: fornuftig
+  platform: ESP8266
+  board: d1_mini
+
+# Enable logging
+logger:
+  logs:
+      adc: INFO
+
+
+# Enable Home Assistant API
+api:
+
+ota:
+  password: "i like beans"
+
+#I've found ESPHome works better with a static IP 
+wifi:
+  manual_ip:
+    static_ip: 192.168.0.0
+    gateway: 192.168.0.1
+    subnet: 255.255.255.0
+  ssid: "add yours here"
+  password: "i still like beans"
+
+
+sensor:
+  # Read LED from adc input 10 times per second
+  - platform: adc
+    pin: A0
+    internal: true
+    id: led_internal
+    update_interval: 100ms
+    accuracy_decimals: 1
+    filters:
+      - delta: 0.1
+    on_value:
+      if:
+        condition:
+          lambda: 'return x < 0.2;'
+        then:
+          - binary_sensor.template.publish:
+              id: led_sensor
+              state: OFF
+        else:
+          - binary_sensor.template.publish:
+              id: led_sensor
+              state: ON
+
+binary_sensor:
+  - platform: template
+    id: led_sensor
+    name: fornuftig
+    device_class: problem
+  - platform: gpio
+    internal: true
+    id: in_d1
+    pin:
+      number: D1
+      mode: INPUT_PULLUP
+      inverted: True
+    on_press:
+      - fan.turn_off:
+          id: fan_internal
+  - platform: gpio
+    internal: true
+    id: in_d5
+    pin:
+      number: D5
+      mode: INPUT_PULLUP
+      inverted: True
+    on_press:
+      - fan.turn_on:
+          id: fan_internal
+          speed: 1
+  - platform: gpio
+    internal: true
+    id: in_d6
+    pin:
+      number: D6
+      mode: INPUT_PULLUP
+      inverted: True
+    on_press:
+      - fan.turn_on:
+          id: fan_internal
+          speed: 2
+  - platform: gpio
+    internal: true
+    id: in_d7
+    pin:
+      number: D7
+      mode: INPUT_PULLUP
+      inverted: True
+    on_press:
+      - fan.turn_on:
+          id: fan_internal
+          speed: 3
+
+output:
+  - platform: gpio
+    pin: D2
+    id: gpio_d2
+    inverted: true
+  - platform: gpio
+    pin: D3
+    id: gpio_d3
+    inverted: true
+  - platform: gpio
+    pin: D4
+    id: gpio_d4
+    inverted: true
+  - platform: template
+    id: fan_out_internal
+    type: float
+    write_action:
+      if:
+        condition:
+          lambda: 'return state < 0.1;'
+        then:
+          - output.turn_off: gpio_d4
+          - output.turn_off: gpio_d3
+          - output.turn_off: gpio_d2
+        else:
+          - if:
+              condition:
+                lambda: 'return state < 0.4;'
+              then:
+                - output.turn_on:  gpio_d4
+                - output.turn_off: gpio_d3
+                - output.turn_off: gpio_d2
+              else:
+                - if:
+                    condition:
+                      lambda: 'return state < 0.7;'
+                    then:
+                      - output.turn_off: gpio_d4
+                      - output.turn_on:  gpio_d3
+                      - output.turn_off: gpio_d2
+                    else:
+                      - output.turn_off: gpio_d4
+                      - output.turn_off: gpio_d3
+                      - output.turn_on:  gpio_d2
+
+fan:
+ - platform: speed
+   output: fan_out_internal
+   id: fan_internal
+   name: fornuftig
+   speed_count: 3
