@@ -61,6 +61,7 @@ sensor:
     icon: mdi:flash-circle
     accuracy_decimals: 0
     pin: GPIO4
+    internal_filter: 50ms 
     on_value:
       then:
         - light.turn_on:
