@@ -26,6 +26,6 @@ You can read about these over [here](https://github.com/danielcuthbert/home-assi
 
 I was then bored and had an idea: what if I read the internal pollution levels and if they went above a threshold, I turned on an air purifier? Thankfully IKEA came to the rescue with their cheap [FÖRNUFTIG](https://www.ikea.com/gb/en/p/foernuftig-air-purifier-black-40488065/) offering and I set about hacking this too. 
 
-![](images/FÖRNUFTIG.jpeg)
+![](images/FORNUFTIG.jpeg)
 
 That project lives in [here](https://github.com/danielcuthbert/home-assistant/tree/main/Fornuftig)
