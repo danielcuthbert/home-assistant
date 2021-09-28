@@ -71,6 +71,10 @@ sensor:
             id: led_red
     filters:
       - lambda: return x * ((60.0 / 1000) * 1000.0);
+      - lambda: float MIN_VALUE = 0.0;
+                float MAX_VALUE = 18000.0;
+                if (MIN_VALUE <= x && x <= MAX_VALUE) return x;
+                else return {};
     total:
       name: 'Total energy used by the house'
       unit_of_measurement: 'kWh'

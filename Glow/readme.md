@@ -50,4 +50,18 @@ If you see this, then you can add a panel to Lovelace that looks like this
 
 ![glow_stats](../images/glow_stats.png)
 
-Then the world is your oyster. 
+## Oddities 
+
+I've noticed spikes, spikes that shouldn't happen due to 230V/100A max limitations. 
+
+![](../images/glow_stats2.png)
+![](../images/glow_stats3.png)
+
+So to maybe try and fix these, well more accurately ignore them, I added the following to the lambda:
+
+`   - lambda: float MIN_VALUE = 0.0;
+                float MAX_VALUE = 23000.0;
+                if (MIN_VALUE <= x && x <= MAX_VALUE) return x;
+                else return {};`
+                
+UK houses are 230V at max 100A so that means 23000 Watts. Anything above that and I truly don't give a monkeys, so ignore. 
