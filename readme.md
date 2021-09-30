@@ -18,7 +18,7 @@ Plans are in action to bring this back into the Home Assistant setup, which will
 
 IKEA released the most amazing little pollution sensor in the form of the [VINDRIKTNING](https://www.ikea.com/gb/en/p/vindriktning-air-quality-sensor-80515910/) and many of us thought 'this could be hacked with' and I did just that one Sunday afternoon. 
 
-![](images/vindrikting.jpeg)
+![](images/vindriktning1.jpg)
 
 You can read about these over [here](https://github.com/danielcuthbert/home-assistant/tree/main/Vindrikting)
 
