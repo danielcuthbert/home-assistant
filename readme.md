@@ -20,7 +20,7 @@ IKEA released the most amazing little pollution sensor in the form of the [VINDR
 
 ![](images/vindriktning1.jpg)
 
-You can read about these over [here](https://github.com/danielcuthbert/home-assistant/tree/main/Vindrikting)
+You can read about these over [here](https://github.com/danielcuthbert/home-assistant/tree/main/VINDRIKTNING)
 
 ## Internal Air Purifier
 
