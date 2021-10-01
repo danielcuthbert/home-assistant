@@ -1,0 +1,77 @@
+esphome:
+  name: outside-pollution
+  platform: ESP8266
+  board: d1_mini
+
+# Enable logging
+logger:
+
+# Enable Home Assistant API
+api:
+
+ota:
+  password: "i like beans"
+
+#I've found ESPHome works better with a static IP
+wifi:
+  manual_ip:
+    static_ip: 192.168.0.0
+    gateway: 192.168.0.1
+    subnet: 255.255.255.0
+  ssid: "add yours here"
+  password: "i still like beans"
+
+captive_portal:
+
+
+# This sets up the UART needed for the PMS5003
+# A ESP8266 has two UARTS, one is needed for logging. Set the pin to be something else
+uart:
+  rx_pin: D4
+  baud_rate: 9600
+
+# This sets up the i2c needed for the BME280
+i2c:
+  sda: D2
+  scl: D1
+  scan: true
+  id: bus_a
+
+# The PMS5003 can measure 1.0, 2.5 and 10.0
+# I've found you only really need 2.5 and 10 at a push
+# Uncomment as you see fit
+
+sensor:
+    - platform: pmsx003
+      type: PMSX003
+#      pm_1_0:
+#        name: "Outside Particulate Matter <1.0µm Concentration"
+#        filters:
+#          - throttle: 30s
+      pm_2_5:
+        name: "Outside Particulate Matter <2.5µm Concentration"
+        filters:
+        - sliding_window_moving_average:
+            window_size: 180
+            send_every: 60
+      pm_10_0:
+        name: "Outside Particulate Matter <10.0µm Concentration"
+        filters:
+        - sliding_window_moving_average:
+            window_size: 180
+            send_every: 180
+
+    - platform: bme280
+      address: 0x77
+      i2c_id: bus_a
+      temperature:
+        name: "Outside Temperature"
+        oversampling: 16x
+        accuracy_decimals: 1
+      pressure:
+        name: "Outside Pressure"
+        accuracy_decimals: 1
+      humidity:
+        name: "Outside Humidity"
+        accuracy_decimals: 1
+      update_interval: 60s
