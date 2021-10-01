@@ -16,7 +16,7 @@ Plans are in action to bring this back into the Home Assistant setup, which will
 
 ## External Pollution Sensor (ESP8266)
 
-![](smutsig.jpg)
+![](images/smutsig.jpg)
 
 Similar to the above, this one uses a Wemos D1 instead of the Cortex M4 and pushes the data into my Home Assistant set up instead of Adafruits. 
 
