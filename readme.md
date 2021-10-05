@@ -37,3 +37,7 @@ I was then bored and had an idea: what if I read the internal pollution levels a
 ![](images/FORNUFTIG.jpeg)
 
 That project lives in [here](https://github.com/danielcuthbert/home-assistant/tree/main/Fornuftig)
+
+## Soil Moisture Sensors
+
+She wanted to know when her plants needed a water. Her wish was my command. You can find out more about that over [here](https://github.com/danielcuthbert/home-assistant/tree/main/Vaxter)
