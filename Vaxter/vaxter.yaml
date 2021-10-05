@@ -1,0 +1,45 @@
+esphome:
+  name: cactus-water
+  platform: ESP8266
+  board: d1_mini
+
+  # Enable logging
+  logger:
+
+  # Enable Home Assistant API
+  api:
+
+  ota:
+    password: "i like beans"
+
+  #I've found ESPHome works better with a static IP
+  wifi:
+    manual_ip:
+      static_ip: 192.168.0.0
+      gateway: 192.168.0.1
+      subnet: 255.255.255.0
+    ssid: "add yours here"
+    password: "i still like beans"
+
+
+  captive_portal:
+
+
+sensor:
+
+# Dry (in air) is 0.71V
+# In a wet env, it is 0.47V
+# fully submerged, it is 0.3V
+
+  - platform: adc
+    pin: A0
+    id: moisture1
+    unit_of_measurement: "%"
+    state_class: measurement
+    filters:
+        - calibrate_linear:
+          - 0.71 -> 0.0
+          - 0.30 -> 100.0
+    icon: "mdi:water-percent"
+    name: "Cactus Soil Moisture Level"
+    update_interval: 60s
