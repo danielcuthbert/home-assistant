@@ -30,8 +30,16 @@ captive_portal:
 uart:
   rx_pin: D2
   baud_rate: 9600
-
+  
 sensor:
+  - platform: dht
+    pin: D3
+    temperature:
+      name: "Living Room Temperature"
+    humidity:
+      name: "Living Room Humidity"
+    update_interval: 60s  
+ 
   - platform: pm1006
     pm_2_5:
-      name: "IKEA Vindriktning PM2.5 sensor in Kitchen"
+      name: "IKEA Vindriktning PM2.5 sensor in lounge"
