@@ -1,0 +1,56 @@
+esphome:
+  name: catchy_name
+  platform: ESP8266
+  board: esp01_1m
+  board_flash_mode: dout
+
+# Enable logging
+logger:
+
+api:
+  encryption:
+    key: yourkeyhere=
+
+ota:
+  password: "i still like beans"
+
+  #I've found ESPHome works better with a static IP
+  wifi:
+    manual_ip:
+      static_ip: 192.168.0.0
+      gateway: 192.168.0.1
+      subnet: 255.255.255.0
+    ssid: "add yours here"
+    password: "i still like beans"
+
+
+status_led:
+  pin:
+    number: GPIO13
+    inverted: false
+
+captive_portal:
+
+binary_sensor:
+  - platform: gpio
+    pin:
+      number: GPIO0
+      mode: INPUT_PULLUP
+      inverted: True
+    name: "catchy_name Button"
+    on_press:
+      - switch.toggle: relay
+  - platform: status
+    name: "catchy_name Status"
+
+sensor:
+  - platform: wifi_signal
+    name: "scatchy_name WiFi Signal"
+    update_interval: 60s
+switch:
+  - platform: gpio
+    name: "catchy_name Relay"
+    pin: GPIO12
+    id: "relay"
+  - platform: restart
+    name: "catchy_name Restart"
