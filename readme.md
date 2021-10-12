@@ -49,3 +49,9 @@ She wanted to know when her plants needed a water. Her wish was my command. You 
 ![](images/blaser1.jpg)
 
 I wanted to create an automation function that monitored Los Diablos's room temperature and turned on the fan when it hit a certain level. We've done such an amazing job insulating their room that it gets hot, very hot and as such, they turn on the fan often but forget to turn it off. This is that [journey](https://github.com/danielcuthbert/home-assistant/tree/main/Blaser)
+
+## Security & Threat Models
+
+You cannot have IoT without security, so here's a [page](https://github.com/danielcuthbert/home-assistant/blob/main/threat_model.md) that walks you through the threat model I created. I shall continue to update it with threats and countermeasures I come up with to make this all tight and secure. 
+
+![](images/ha_architecture.png)
