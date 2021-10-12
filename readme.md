@@ -34,10 +34,18 @@ You can read about these over [here](https://github.com/danielcuthbert/home-assi
 
 I was then bored and had an idea: what if I read the internal pollution levels and if they went above a threshold, I turned on an air purifier? Thankfully IKEA came to the rescue with their cheap [FÖRNUFTIG](https://www.ikea.com/gb/en/p/foernuftig-air-purifier-black-40488065/) offering and I set about hacking this too. 
 
-![](images/FORNUFTIG.jpeg)
+![](images/FORNUFTIG1.jpeg)
 
 That project lives in [here](https://github.com/danielcuthbert/home-assistant/tree/main/Fornuftig)
 
 ## Soil Moisture Sensors
 
+![](images/vaxter1.jpg)
+
 She wanted to know when her plants needed a water. Her wish was my command. You can find out more about that over [here](https://github.com/danielcuthbert/home-assistant/tree/main/Vaxter)
+
+## Fans
+
+![](images/blaser1.jpg)
+
+I wanted to create an automation function that monitored Los Diablos's room temperature and turned on the fan when it hit a certain level. We've done such an amazing job insulating their room that it gets hot, very hot and as such, they turn on the fan often but forget to turn it off. This is that [journey](https://github.com/danielcuthbert/home-assistant/tree/main/Blaser)
