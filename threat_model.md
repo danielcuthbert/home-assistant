@@ -1,6 +1,6 @@
 # The Joys of Threat Models
 
-Threat models are cool. They help you perform systematic analysis of controls and defences needed when you are designing, developing and deploying $THING. 
+Threat models are cool. They help you perform a systematic analysis of controls and defences needed when you are designing, developing and deploying $THING. 
 
 This is really important as trying to retrofit this once $THING has been built is actually much harder. A good threat model helps you understand the paths an attacker may/may not take when trying to pwn $THING. 
 
@@ -50,7 +50,7 @@ As I said at the start of this guide, a threat model should tell you what the th
 
 A medium risk score on first glance, but what I'm interested in are the actual threats to the overall architecture and individual components
 
-![](images/threatmodel6.png)
+
 
 Now a caveat: understanding current threats against many systems, devices, networks and so on is one hell of a task. There is no way in hell most can do this and keep updated and this is where traditional threat modeling tools start to fail miserably. You are probably not an attacker, you might never have pwned the shit out of something to steal data or move laterally around a network, so how do you know what the threats are? 
 
@@ -99,7 +99,7 @@ Once we've done that, wrote the code that ensures the firmware makes use of the 
 ![](images/threatmodel18.jpeg)
 ![](images/threatmodel17.jpeg)
 
-We now have encypted communications between nodes and the UI, so that threat is now no longer valid and the model needs to be updated. Throughout the threat model, you will see countermeasures you need to apply and this is the power of a good threat model, it spells it out for you
+We now have encrypted communications between nodes and the UI, so that threat is now no longer valid and the model needs to be updated. Throughout the threat model, you will see countermeasures you need to apply and this is the power of a good threat model, it spells it out for you
 
 ![](images/threatmodel10.png)
 
