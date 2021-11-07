@@ -10,7 +10,12 @@ logger:
 
 
 # Enable Home Assistant API
+# ESPHome now uses the Noise Protocol Framework to secure the API comms
+# Create individual entry for each device using a 32-character base64 pre-shared key
+# name: key
 api:
+ encryption:
+    key: !secret fornuftig_api_encryption_key
 
 ota:
   password: "i like beans"

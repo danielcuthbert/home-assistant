@@ -7,7 +7,13 @@ esphome:
 logger:
 
 # Enable Home Assistant API
+# ESPHome now uses the Noise Protocol Framework to secure the API comms
+# Create individual entry for each device using a 32-character base64 pre-shared key
+# name: key
+
 api:
+  encryption:
+    key: !secret outside_api_encryption_key
 
 ota:
   password: "i like beans"
@@ -27,13 +33,13 @@ captive_portal:
 # This sets up the UART needed for the PMS5003
 # A ESP8266 has two UARTS, one is needed for logging. Set the pin to be something else
 uart:
-  rx_pin: D4
+  rx_pin: GPIO14
   baud_rate: 9600
 
 # This sets up the i2c needed for the BME280
 i2c:
-  sda: D2
-  scl: D1
+  sda: GPIO4
+  scl: GPIO5
   scan: true
   id: bus_a
 
@@ -44,10 +50,10 @@ i2c:
 sensor:
     - platform: pmsx003
       type: PMSX003
-#      pm_1_0:
-#        name: "Outside Particulate Matter <1.0µm Concentration"
-#        filters:
-#          - throttle: 30s
+      pm_1_0:
+        name: "Outside Particulate Matter <1.0µm Concentration"
+        filters:
+          - throttle: 30s
       pm_2_5:
         name: "Outside Particulate Matter <2.5µm Concentration"
         filters:

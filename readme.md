@@ -55,3 +55,23 @@ I wanted to create an automation function that monitored Los Diablos's room temp
 You cannot have IoT without security, so here's a [page](https://github.com/danielcuthbert/home-assistant/blob/main/threat_model.md) that walks you through the threat model I created. I shall continue to update it with threats and countermeasures I come up with to make this all tight and secure. 
 
 ![](images/ha_architecture.png)
+
+## Noise Protocol Framework
+
+With the 2021.9.0 release, we saw a very cool feature added by https://github.com/OttoWinter namely support for the noise protocol. This now means you can add a layer of encryption to the API for all nodes, which is sexy!
+
+The [Noise Protocol](http://www.noiseprotocol.org/) is a framework that allows anyone to build crypto protocols without the added complexity that often comes with implementing crypto. Setting this up is pretty easy. 
+
+### YAML Config
+
+For each node, you need to add the following:
+
+`api:``
+  ``encryption:``
+  ``key: !secret outside_api_encryption_key`
+
+This enables noise. You also need to add the corresponding entry into the new secrets.yaml pane in your ESPHome page. The key itself is a pre-shared 32-byte base64 encoded string, which you can generate using the following command:
+
+`openssl rand -base64 32`
+
+Once you've rebuilt your firmware and pushed it to the device, you'll need to add this key to Home Assistant in order to re-auth. 
