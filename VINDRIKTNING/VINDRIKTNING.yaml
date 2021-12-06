@@ -45,7 +45,38 @@ sensor:
     humidity:
       name: "Living Room Humidity"
     update_interval: 60s  
- 
-  - platform: pm1006
-    pm_2_5:
-      name: "IKEA Vindriktning PM2.5 sensor in lounge"
+  
+- platform: pm1006
+  pm_2_5:
+    name: "PM2.5 sensor in lounge"
+    accuracy_decimals: 2
+    filters:
+      - sliding_window_moving_average:
+          window_size: 50
+          send_every: 10
+          send_first_at: 10
+- platform: template
+  name: "PM2.5 sensor in lounge - Power Usage"
+  id: power_consumption
+  device_class: power
+  state_class: measurement
+  unit_of_measurement: W
+  accuracy_decimals: 4
+  filters:
+    - heartbeat: 60s
+- platform: integration
+  name: "PM2.5 sensor in lounge - Consumed Energy"
+  sensor: power_consumption
+  time_unit: 'h'
+  device_class: energy
+  state_class: total_increasing
+  unit_of_measurement: 'Wh'
+  restore: false
+  integration_method: left
+
+interval:
+- interval: 1min
+  then:
+    - sensor.template.publish:
+        id: power_consumption
+        state: 0.5696
