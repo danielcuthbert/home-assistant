@@ -1,0 +1,161 @@
+##Outside AQI Index
+
+type: custom:mini-graph-card
+entities:
+  - entity: sensor.outside_pm_1_0um
+    index: 0
+    name: Outside PM <1.0µm
+  - entity: sensor.outside_pm_2_5um
+    index: 1
+    name: Outside PM <2.5µm
+    show_state: true
+  - entity: sensor.outside_pm_10_0um
+    index: 2
+    name: Outside PM <10.0µm
+    show_state: false
+    y_axis: secondary
+font_size: 105
+hour24: true
+hours_to_show: 168
+icon: mdi:thought-bubble-outline
+line_color:
+  - '#FF5733'
+  - '#C70039 '
+  - '#33FFBD'
+line_width: 3
+name: Outside AQI Index
+show:
+  extrema: true
+  average: true
+  group_by: date
+style: |
+  ha-card {
+    height: 220px !important;
+  }
+
+
+## Lounge Temp & Humidity 
+
+type: custom:mini-graph-card
+entities:
+  - entity: sensor.living_room_temperature
+    index: 0
+    name: Temp
+  - entity: sensor.living_room_humidity
+    index: 1
+    name: Humidity
+    show_state: true
+    y_axis: secondary
+font_size: 105
+hour24: true
+hours_to_show: 168
+icon: mdi:sprout-outline
+line_color:
+  - Green
+  - Orange
+line_width: 3
+name: Lounge Temp & Humidity
+show:
+  extrema: true
+  average: true
+style: |
+  ha-card {
+    height: 220px !important;
+  }
+
+## Elec/Gas
+
+type: vertical-stack
+cards:
+  - type: horizontal-stack
+    cards:
+      - type: custom:mini-graph-card
+        entities:
+          - entity: sensor.glow84f3ebbe4d6d_energy_consumption
+        line_color: green
+        name: Total Elec
+        line_width: 4
+        font_size: 80
+      - type: custom:mini-graph-card
+        entities:
+          - entity: sensor.glow84f3ebbe4d6d_power_consumption
+        line_color: orange
+        line_width: 4
+        name: Current
+        font_size: 80
+      - type: custom:mini-graph-card
+        entities:
+          - entity: sensor.gas_consumption_today
+        line_color: red
+        name: Total Gas
+        line_width: 4
+        font_size: 80
+        
+ ## Indoor AQI
+ type: custom:mini-graph-card
+entities:
+  - entity: sensor.boys_pm2_5_sensor
+    index: 0
+    name: Boys
+  - entity: sensor.pm2_5_sensor_in_lounge
+    index: 1
+    name: Lounge
+  - entity: sensor.pm2_5_sensor_in_kitchen
+    index: 2
+    name: Kitchen
+    show_state: true
+    y_axis: secondary
+font_size: 105
+hour24: true
+hours_to_show: 24
+icon: mdi:thought-bubble
+line_color:
+  - orange
+  - blue
+  - green
+line_width: 3
+name: Indoor AQI Index
+show:
+  extrema: true
+  average: true
+style: |
+  ha-card {
+    height: 220px !important;
+  }
+
+## Outside Temp and Humidity
+
+type: custom:mini-graph-card
+name: Outside Temperature
+name_adaptive_color: true
+icon_adaptive_color: true
+animate: true
+height: 175
+line_width: 6
+lower_bound: 2
+upper_bound: ~32
+entities:
+  - entity: sensor.outside_temperature
+    name: Row1
+color_thresholds:
+  - value: 2
+    color: '#0000ff'
+  - value: 8
+    color: '#00ffff'
+  - value: 12
+    color: '#00ff00'
+  - value: 14
+    color: '#77ff00'
+  - value: 16
+    color: '#afff00'
+  - value: 20
+    color: '#ffff00'
+  - value: 24
+    color: '#ffaa00'
+  - value: 28
+    color: '#ff6600'
+  - value: 30
+    color: '#ff3300'
+  - value: 32
+    color: '#ff0000'
+points_per_hour: 1
