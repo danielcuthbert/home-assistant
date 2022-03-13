@@ -2,7 +2,9 @@
 
 With the outside pollution sensor up and running, my mind got thinking about how pollution from outside travels inside once we open windows. I spent a while looking at potential solutions I could use and abuse and then IKEA released the [VINDRIKTNING](https://www.ikea.com/gb/en/p/vindriktning-air-quality-sensor-80515910/), a very cheap particulate matter (PM 2.5) sensor powered by USB-C and costing less than a tenner. 
 
-You had me at cheap, so hello meatballs 'n gravy and a trip to IKEA to grab a few. 
+The great thing about this unit, aside from the price, is that you can hack it to add additional sensors such as a BME280 (Temperature, Pressure & Humidity Sensor) or low-cost DHT temperature & humidity sensors. If this is your goal, I've added the howto at the end of this readme.   
+
+Anyway, you had me at cheap, so hello meatballs 'n gravy and a trip to IKEA to grab a few. 
 
 ## Hardware Breakdown
 
@@ -81,9 +83,37 @@ Once you've soldered it all up, it should look like this
 
 ![](../images/vindriktning11.jpg)
 
+## Adding Additional Sensors
+
+If you want to monitor temperature and others, this is easily done too. In this example, I'm adding a BME280 to the unit.
+
+![](../images/vindriktning20..png)
+
+The BME280 makes use of [I²C](https://learn.sparkfun.com/tutorials/i2c/all) for its communication. As such, you need to add 4 wires to the BME280 and Wemos D1 (if that's what you've gone for)
+
+| BME280     | Wemos D1 |
+| ----------- | ----------- |
+| VIN      | 3.3V      |
+| GND   | GND        |
+| SCK   | D2        |
+| SDI   | D1        |
+
+**Important Note**
+
+IF you are adding more sensors, you need to change the UART rx_pin to something else. I've found this works well on the Wemos as does using 3.3V for the BME280. 
+
+```
+uart:
+  rx_pin: GPIO14
+  baud_rate: 9600
+```
+Reason being, the ESP8266 has two UARTS, one is needed for logging. 
+
 ## ESPHome & Home Assistant
 
-Adding it to Home Assistant using the amazing [ESPHome](https://esphome.io/) option couldn't be easier
+Adding it to Home Assistant using the amazing [ESPHome](https://esphome.io/) option couldn't be easier:
+
+**Without Additional Sensors**
 
 ```
   uart:
@@ -95,7 +125,40 @@ sensor:
     pm_2_5:
       name: "IKEA Vindriktning PM2.5 sensor in lounge"
       
-      
+```    
+**With Additional Sensors**
+
+```
+# This sets up the i2c needed for the BME280
+i2c:
+  sda: D2
+  scl: D1
+  scan: true
+  id: bus_a
+
+# Example configuration entry
+  sensor:
+    - platform: bme280
+      temperature:
+        name: "BME280 Temperature"
+        oversampling: 16x
+      pressure:
+        name: "BME280 Pressure"
+      humidity:
+        name: "BME280 Humidity"
+      address: 0x77
+      update_interval: 60s  
+  
+   - platform: pm1006
+     pm_2_5:
+       name: "PM2.5 sensor in office"
+         accuracy_decimals: 2
+
+```
+
+If you've chosen a DHT sensor, the section you'd need to add is as following:
+
+```
   - platform: dht
     model: DHT11
     pin: D3
@@ -105,9 +168,23 @@ sensor:
       name: "Lounge Room Humidity"
     update_interval: 60s
 ```    
+The DHT22 and DHT11 require external pull up resistors on the data line. To do this, solder a resistor with about 4.7kΩ (anything in the range from 1kΩ to 10kΩ probably works fine, but if you’re having issues try the 4.7kΩ recommended by the manufacturer) between DATA and 3.3V.
+
 
 Once you've flashed the device and added it to HA, you should be able to create graphs like so
 
 ![](../images/vindriktning19.png)
+
+
+### Debugging & Troubleshooting
+
+1: If your BME280 isn't found, check the logs to see what the I²C bus scan reports, like so:
+
+![](../images/vindriktning21.png)
+
+you can then edit it in the configuration file with the address: 0x77 variable. 
+
+
+
 
   
