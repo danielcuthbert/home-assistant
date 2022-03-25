@@ -67,5 +67,5 @@ If all the wiring was correct and you were able to build the firmware and push i
 
 Next up is adding it to your Home Assistant and playing with how you want the data displayed. Here's some ideas
 
-![](images/outside_aqi2.png)
+![](../images/outside_aqi2.png)
 ![](../images/smutsig5.png)
