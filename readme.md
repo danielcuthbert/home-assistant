@@ -20,6 +20,8 @@ Plans are in action to bring this back into the Home Assistant setup, which will
 
 Similar to the above, this one uses a Wemos D1 instead of the Cortex M4 and pushes the data into my Home Assistant set up instead of Adafruits. 
 
+![](images/outside_aqi2.png)
+
 This project can be found ![here](https://github.com/danielcuthbert/home-assistant/tree/main/Smutsig)
 
 ## Internal Pollution Sensors
