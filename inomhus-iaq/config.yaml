@@ -1,0 +1,84 @@
+esphome:
+  name: bme688-iaq
+
+esp8266:
+  board: d1_mini
+
+# Enable logging
+logger:
+
+# Enable Home Assistant API
+api:
+
+ota:
+  password: !ota_password
+
+wifi:
+  ssid: !secret wifi_ssid
+  password: !secret wifi_password
+  manual_ip:
+    static_ip: 192.168.137.253
+    gateway: 192.168.137.1
+    subnet: 255.255.255.0
+
+  # Enable fallback hotspot (captive portal) in case wifi connection fails
+  ap:
+    ssid: "Bme688-Iaq Fallback Hotspot"
+    password: "random"
+
+captive_portal:
+
+# This sets up the i2c needed for the BME688
+i2c:
+  sda: D2
+  scl: D1
+  scan: true
+  id: bus_a
+
+bme680_bsec:
+# Using the ultra low power sample rate
+  sample_rate: ulp
+
+
+sensor:
+  - platform: bme680_bsec
+    update_interval: 60s
+    temperature:
+      name: "BME688 Temperature"
+      sample_rate: ulp
+      filters:
+        - median
+    pressure:
+      name: "BME688 Pressure"
+      sample_rate: ulp
+      filters:
+        - median
+    humidity:
+      name: "BME688 Humidity"
+      sample_rate: ulp
+      filters:
+        - median
+    iaq:
+      name: "BME688 IAQ"
+      filters:
+        - median
+    iaq_accuracy:
+      name: "IAQ Accuracy (0 - 3)"
+
+    co2_equivalent:
+      name: "BME688 CO2 Equivalent"
+      filters:
+        - median
+    breath_voc_equivalent:
+      name: "BME688 VOC Equivalent"
+      filters:
+        - median
+    gas_resistance:
+      name: "BME688 Gas Resistance"
+
+
+text_sensor:
+  - platform: bme680_bsec
+    iaq_accuracy:
+      # IAQ accuracy as a text value of Stabilizing, Uncertain, Calibrating, Calibrated
+      name: "BME688 IAQ Accuracy"
