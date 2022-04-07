@@ -92,3 +92,11 @@ The BSEC algorithm automatically gathers data in order to calibrate the IAQ meas
 
 
 Every state_save_interval, or as soon thereafter as full calibration is reached, the current algorithm state is saved to flash so that the process does not have to start from zero on device restart.
+
+### Roadmap & Plans
+
+![](../images/bosch-sensortec-bme688-dev-kit.jpg)
+
+As I said above, I'm waiting for my dev board to arrive from Mouser. When it does, the plan is to train this device on a number of household cleaning items we use, the candles my wife is obsessed with, the indoor automatic air freshener and some others and then apply that to this ESPHome setup. I'm hoping this allows me to fine-tune detection in a more reliable way. 
+
+I think this will mean modifying the current ESPHome code for the BME 680 sensor to allow the upload of custom config files. Should be a fun exercise. 
