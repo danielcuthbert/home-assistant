@@ -81,14 +81,14 @@ You also have the option to change how the sensors are sampled:
     sample_rate: ulp
 ```
 
-###IAQ Accuracy and Calibration
+### IAQ Accuracy and Calibration
 
 The BSEC algorithm automatically gathers data in order to calibrate the IAQ measurements. The IAQ Accuracy sensor will give one of the following values:
 
-* Stabilizing: The device has just started, and the sensor is stabilizing (this typically lasts 5 minutes)
-* Uncertain: The background history of BSEC is uncertain. This typically means the gas sensor data was too stable for BSEC to clearly define its reference.
-* Calibrating: BSEC found new calibration data and is currently calibrating.
-* Calibrated: BSEC calibrated successfully.
+* Stabilizing: The device has just started, and the sensor is stabilizing (this typically lasts 5 minutes). This is reflected as a 0
+* Uncertain: The background history of BSEC is uncertain. This typically means the gas sensor data was too stable for BSEC to clearly define its reference. This is reflected as a 1
+* Calibrating: BSEC found new calibration data and is currently calibrating. This is reflected as a 2
+* Calibrated: BSEC calibrated successfully. This is reflected as a 3
 
 
 Every state_save_interval, or as soon thereafter as full calibration is reached, the current algorithm state is saved to flash so that the process does not have to start from zero on device restart.
