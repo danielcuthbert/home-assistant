@@ -89,5 +89,6 @@ The BSEC algorithm automatically gathers data in order to calibrate the IAQ meas
 * Uncertain: The background history of BSEC is uncertain. This typically means the gas sensor data was too stable for BSEC to clearly define its reference.
 * Calibrating: BSEC found new calibration data and is currently calibrating.
 * Calibrated: BSEC calibrated successfully.
-* 
+
+
 Every state_save_interval, or as soon thereafter as full calibration is reached, the current algorithm state is saved to flash so that the process does not have to start from zero on device restart.
