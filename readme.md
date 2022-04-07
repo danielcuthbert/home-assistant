@@ -32,6 +32,8 @@ IKEA released the most amazing little pollution sensor in the form of the [VINDR
 
 You can read about these over [here](https://github.com/danielcuthbert/home-assistant/tree/main/VINDRIKTNING)
 
+I've since become interested in Volatile Organic Compounds (VOCs) and that journey can be found over [here](https://github.com/danielcuthbert/home-assistant/tree/main/inomhus-iaq)
+
 ## Internal Air Purifier
 
 I was then bored and had an idea: what if I read the internal pollution levels and if they went above a threshold, I turned on an air purifier? Thankfully IKEA came to the rescue with their cheap [FÖRNUFTIG](https://www.ikea.com/gb/en/p/foernuftig-air-purifier-black-40488065/) offering and I set about hacking this too. 
