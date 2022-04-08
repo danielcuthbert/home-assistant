@@ -36,49 +36,45 @@ i2c:
   id: bus_a
 
 bme680_bsec:
-# Using the ultra low power sample rate
-  sample_rate: ulp
-
+  sample_rate: lp
+  iaq_mode: static
+  state_save_interval: 6h
+  
 
 sensor:
   - platform: bme680_bsec
-    update_interval: 60s
     temperature:
       name: "BME688 Temperature"
-      sample_rate: ulp
-      filters:
-        - median
+      
     pressure:
       name: "BME688 Pressure"
-      sample_rate: ulp
-      filters:
-        - median
+      
     humidity:
       name: "BME688 Humidity"
-      sample_rate: ulp
-      filters:
-        - median
+      
     iaq:
       name: "BME688 IAQ"
-      filters:
-        - median
     iaq_accuracy:
       name: "IAQ Accuracy (0 - 3)"
-
+      filters:
+        - median
     co2_equivalent:
       name: "BME688 CO2 Equivalent"
       filters:
         - median
+    # Volatile organic compounds equivalent estimate in ppm    
     breath_voc_equivalent:
       name: "BME688 VOC Equivalent"
       filters:
         - median
     gas_resistance:
-      name: "BME688 Gas Resistance"
-
+      name: "BME688 Gas Resistance"    
+      filters:
+        - median
 
 text_sensor:
   - platform: bme680_bsec
     iaq_accuracy:
       # IAQ accuracy as a text value of Stabilizing, Uncertain, Calibrating, Calibrated
-      name: "BME688 IAQ Accuracy"
+      name: "BME688 IAQ Accuracy"  
+    
