@@ -21,6 +21,7 @@ I think it prudent to start this off with a warning. Not all capacative soil moi
 1: The use of a cheaper 555 chip (timing chip) cannot handle lower voltages, such as those used by batteries when they discharge. This will destroy the readings.
 2: Some are missing the voltage regulator
 3: Some have a glaring mistake in the PCB design whereby a resistor is missing a connection and that too messes up the sensor readings as it isn't connected to GND.
+4: The 8266 ADC has a range of 0-1V, so take this into account
 
 ![](../images/vaxter3.png)
 
@@ -65,7 +66,28 @@ Fully submerged it is 0.3V
 
 Using those values that you discovered, you can edit my YAML accordingly:
 
-![](../images/vaxter5.png)
+```
+# Dry (in air) is 0.71V
+# In a wet env, it is 0.47V
+# fully submerged, it is 0.3V
+
+
+  - platform: adc
+    pin: A0
+    id: moisture1
+    name: "Cactus Soil Moisture Level"
+    unit_of_measurement: "%"
+    accuracy_decimals: 2
+    state_class: measurement
+    icon: "mdi:water-percent"
+    update_interval: 60s
+    filters:
+      - calibrate_linear:
+          # Map the voltage reading when fully submerged in water to 100% moisture
+          - 0.27441 -> 100.0
+          # Map the voltage reading when completely dry to 0% moisture
+          - 0.67578 -> 0.0
+```
 
 If all goes well, you should start seeing results in the log files. 
 

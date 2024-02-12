@@ -25,21 +25,24 @@ esphome:
   captive_portal:
 
 
-sensor:
-
 # Dry (in air) is 0.71V
 # In a wet env, it is 0.47V
 # fully submerged, it is 0.3V
+# 8266 ADC has range of 0-1V, so this is problematic
+
 
   - platform: adc
     pin: A0
     id: moisture1
-    unit_of_measurement: "%"
-    state_class: measurement
-    filters:
-        - calibrate_linear:
-          - 0.71 -> 0.0
-          - 0.30 -> 100.0
-    icon: "mdi:water-percent"
     name: "Cactus Soil Moisture Level"
+    unit_of_measurement: "%"
+    accuracy_decimals: 2
+    state_class: measurement
+    icon: "mdi:water-percent"
     update_interval: 60s
+    filters:
+      - calibrate_linear:
+          # Map the voltage reading when fully submerged in water to 100% moisture
+          - 0.27441 -> 100.0
+          # Map the voltage reading when completely dry to 0% moisture
+          - 0.67578 -> 0.0
