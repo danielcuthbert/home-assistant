@@ -31,18 +31,23 @@ esphome:
 # 8266 ADC has range of 0-1V, so this is problematic
 
 
+sensor:
   - platform: adc
     pin: A0
-    id: moisture1
-    name: "Cactus Soil Moisture Level"
-    unit_of_measurement: "%"
-    accuracy_decimals: 2
-    state_class: measurement
-    icon: "mdi:water-percent"
+    name: "Soil Moisture Level"
     update_interval: 60s
+    unit_of_measurement: "%"
     filters:
-      - calibrate_linear:
-          # Map the voltage reading when fully submerged in water to 100% moisture
-          - 0.27441 -> 100.0
-          # Map the voltage reading when completely dry to 0% moisture
-          - 0.67578 -> 0.0
+    - median: # smooth out the data being received as it could be noisy 
+         window_size: 7 # take 7 readings 
+         send_every: 4 # eport the median value of the last 7 readings every 4th reading.
+         send_first_at: 1
+    - calibrate_linear:
+        - 0.71 -> 0.00 # dry as hell
+        - 0.47 -> 100.00 # wet as hell 
+    # # the esp8266 only operates between 0v and 1v, so you need to adapt this. also only report on up to 100%    
+    - lambda: |
+        if (x < 0) return 0; 
+        else if (x > 100) return 100; 
+        else return (x);
+    accuracy_decimals: 0
